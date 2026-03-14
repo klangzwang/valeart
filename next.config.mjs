@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === 'production';
+import { isProd, prefix } from './lib/config.mjs';
 const nextConfig = {
   basePath: isProd ? '/valeart' : '',
   assetPrefix: isProd ? '/valeart/' : '',
