@@ -1,1 +1,1 @@
-export { default as CubeCanvas } from "./Cube";
+export { default as CubeCanvas } from "./Objects";

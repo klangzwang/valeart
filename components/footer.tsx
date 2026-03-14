@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
+import { prefix } from '@/lib/utils'
 
 const footerLinks = {
   Person: ["About", "Artist"],
@@ -13,9 +14,6 @@ const footerLinks = {
 export function Footer() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-50px" })
-
-  const isProd = process.env.NODE_ENV === 'production';
-  const prefix = isProd ? '/valeart' : '';
 
   return (
     <footer ref={ref} className="border-t border-zinc-800 bg-zinc-950">
@@ -30,9 +28,10 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <a href="#" className="flex items-center gap-2 mb-4">
                 <div className="flex items-center justify-center">
-                  <img src={`${prefix}/logoicon.svg`} />
+                  <img src={`${prefix}/logoicon.svg`} className="w-12" alt="logoicon" />
                 </div>
-              <span className="text-[16px] font-sm" style={{ fontFamily: "var(--font-montserrat)" }}>ValeArt</span>
+
+              <span className="text-[30px] font-sm" style={{ fontFamily: "var(--font-montserrat)" }}>ValeArt</span>
             </a>
             <p className="text-sm text-zinc-500 mb-4">For over 40 years, my love for the digital world has burned as brightly as ever. this fascination is the daily fuel for my creativity...</p>
             {/* System Status */}
