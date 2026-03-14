@@ -3,20 +3,17 @@
 import React from 'react';
 import { motion } from "framer-motion"
 import { CubeCanvas } from "./canvas";
-import Image from 'next/image'
 
 export function Hero() {
+
+  const isProd = process.env.NODE_ENV === 'production';
+  const prefix = isProd ? '/valeart' : '';
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-16 overflow-hidden">
 
       <div className="flex items-center justify-center">
-            <Image 
-              src="/portrait.svg"
-              alt="portrait" 
-              width={480} 
-              height={679} 
-            />
+        <img src={`${prefix}/portrait.svg`} />
       </div>
 
       {/* Background gradient 

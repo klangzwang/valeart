@@ -3,7 +3,6 @@
 import { useState, useRef } from "react"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
-import Image from 'next/image'
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -16,6 +15,9 @@ export function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navRef = useRef<HTMLDivElement>(null)
+
+  const isProd = process.env.NODE_ENV === 'production';
+  const prefix = isProd ? '/valeart' : '';
 
   return (
     <motion.header
@@ -31,12 +33,7 @@ export function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-2">
           <div className="flex items-center justify-center">
-            <Image 
-              src="/logoicon.svg"
-              alt="logoicon" 
-              width={48} 
-              height={48} 
-            />
+            <img src={`${prefix}/logoicon.svg`} />
           </div>
 
           {/*

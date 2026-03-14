@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import Image from 'next/image'
 
 const footerLinks = {
   Person: ["About", "Artist"],
@@ -14,6 +13,9 @@ const footerLinks = {
 export function Footer() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-50px" })
+
+  const isProd = process.env.NODE_ENV === 'production';
+  const prefix = isProd ? '/valeart' : '';
 
   return (
     <footer ref={ref} className="border-t border-zinc-800 bg-zinc-950">
@@ -28,12 +30,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <a href="#" className="flex items-center gap-2 mb-4">
                 <div className="flex items-center justify-center">
-                  <Image 
-                    src="/logoicon.svg"
-                    alt="logoicon" 
-                    width={32} 
-                    height={32} 
-                  />
+                  <img src={`${prefix}/logoicon.svg`} />
                 </div>
               <span className="text-[16px] font-sm" style={{ fontFamily: "var(--font-montserrat)" }}>ValeArt</span>
             </a>
