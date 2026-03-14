@@ -1,14 +1,13 @@
 import type React from "react"
 import type { Metadata } from "next";
-import { Square_Peg, Montserrat, Manrope, Inter } from "next/font/google"
+import { Sansita_Swashed, Montserrat, Manrope, Inter } from "next/font/google"
 import "./globals.css"
 
-const squarepeg = Square_Peg({
-  subsets: ["latin"],
-  variable: "--font-squarepeg",
-  display: "swap",
-  weight: "400",
-})
+const sansita = Sansita_Swashed({
+  subsets: ['latin'],
+  variable: '--font-sansita',
+  display: 'swap',
+});
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -40,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${squarepeg.variable} ${montserrat.variable} ${manrope.variable} ${inter.variable} font-sans antialiased`}>
+      <body className={`${sansita.variable} ${montserrat.variable} ${manrope.variable} ${inter.variable} font-sans antialiased`}>
         <div className="noise-overlay" aria-hidden="true" />
         {children}
       </body>
