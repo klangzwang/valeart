@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
-import { isProd, prefix } from './lib/config.mjs';
 const nextConfig = {
-  basePath: isProd ? '/valeart' : '',
-  assetPrefix: isProd ? '/valeart/' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/valeart' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/valeart/' : '',
   output: 'export',
   typescript: {
     ignoreBuildErrors: true,
