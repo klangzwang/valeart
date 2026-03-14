@@ -30,12 +30,12 @@ export function Navbar() {
       >
         {/* Logo */}
         <a href="#" className="flex items-center gap-2">
-          <div className="w-9 h-9 flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <Image 
               src="/logoicon.svg"
               alt="logoicon" 
-              width={9} 
-              height={9} 
+              width={48} 
+              height={48} 
             />
           </div>
 

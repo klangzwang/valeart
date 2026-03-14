@@ -27,12 +27,12 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <a href="#" className="flex items-center gap-2 mb-4">
-                <div className="w-9 h-9 flex items-center justify-center">
+                <div className="flex items-center justify-center">
                   <Image 
                     src="/logoicon.svg"
                     alt="logoicon" 
-                    width={9} 
-                    height={9} 
+                    width={32} 
+                    height={32} 
                   />
                 </div>
               <span className="text-[16px] font-sm" style={{ fontFamily: "var(--font-montserrat)" }}>ValeArt</span>
@@ -72,7 +72,7 @@ export function Footer() {
           <p className="text-sm text-zinc-500">&copy; {new Date().getFullYear()} ValeArts Germany, Inc. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">
-              Youztube
+              Youtube
             </a>
             <a href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">
               GitHub
