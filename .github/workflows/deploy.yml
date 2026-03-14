@@ -13,15 +13,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Hier setzen wir die Variable, um Node 24 jetzt schon zu erzwingen
+      # Erzwingt die Ausführung der JavaScript-Actions mit Node 24
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6 # Upgrade von v4 auf v6
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6 # Upgrade von v4 auf v6
         with:
-          node-version: "24" # Auf die aktuelle LTS/Stable Version angehoben
+          node-version: "24" 
+          cache: 'npm' # Optional: Beschleunigt zukünftige Builds
       - name: Install dependencies
         run: npm install
       - name: Build with Next.js
