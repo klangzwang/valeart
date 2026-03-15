@@ -17,3 +17,31 @@ export function useIsMobile() {
 
   return !!isMobile
 }
+
+export function useDeviceOrientation() {
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [orientation, setOrientation] = React.useState<'portrait' | 'landscape'>('portrait');
+
+  React.useEffect(() => {
+
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    const orientationQuery = window.matchMedia('(orientation: portrait)');
+
+    const updateState = () => {
+      setIsMobile(mobileQuery.matches);
+      setOrientation(orientationQuery.matches ? 'portrait' : 'landscape');
+    };
+
+    updateState();
+
+    mobileQuery.addEventListener('change', updateState);
+    orientationQuery.addEventListener('change', updateState);
+
+    return () => {
+      mobileQuery.removeEventListener('change', updateState);
+      orientationQuery.removeEventListener('change', updateState);
+    };
+  }, []);
+
+  return { isMobile, orientation };
+}

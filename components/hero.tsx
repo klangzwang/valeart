@@ -1,7 +1,7 @@
 "use client"
 
-import { motion, useInView } from "framer-motion"
 import { useRef, useEffect, useState } from "react"
+import { motion, useInView, useScroll, useTransform } from "framer-motion"
 import { prefix } from '@/lib/utils';
 import { AArrowDown } from "lucide-react"
 import Typewriter from "typewriter-effect";
@@ -115,9 +115,50 @@ function AboutBox() {
   )
 }
 
-export function Hero() {
-  const isMobile = useIsMobile()
+export function HeroMobile({ portrait }: { portrait: string }) {
+  const targetRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end start"],
+  })
 
+  const portraitY = useTransform(scrollYProgress, [0, 1], ["0px", "400px"])
+  const portraitOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+
+  return (
+    <section 
+      ref={targetRef} 
+      className="relative min-h-[150vh] flex flex-col items-center justify-center px-4 pt-24 pb-16 overflow-hidden"
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950 to-zinc-900 pointer-events-none" />
+      <div className="absolute left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-zinc-600/20 rounded-full blur-3xl pointer-events-none" />
+
+      <motion.div 
+        style={{ y: portraitY, opacity: portraitOpacity }}
+        className="fixed inset-0 flex items-center justify-center pointer-events-none"
+      >
+        <img src={`${prefix}/${portrait}`} className={"scale-50 -translate-y-25"} alt="Portrait" />
+      </motion.div>
+
+      <div className="relative z-10 mt-50">
+        <AboutBox />
+      </div>
+      
+      <div className="relative z-10 w-full mt-20">
+      </div>
+      
+    </section>
+  )
+}
+
+export function HeroDesktop({ portrait }: { portrait: string }) {
+
+  return (
+    <>
+    </>
+  )
+
+  {/*
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-16 overflow-hidden">
 
@@ -125,12 +166,37 @@ export function Hero() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-zinc-800/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="absolute pointer-events-none">
-        <AboutBox />
+        <img src={`${prefix}/portrait.svg`} className={isMobile ? "scale-40" : "scale-50 translate-x-1/2"} alt="Portrait" />
       </div>
 
       <div className="absolute pointer-events-none">
-        <img src={`${prefix}/portrait.svg`} className={isMobile ? "scale-40" : "scale-50 translate-x-1/2"} alt="Portrait" />
+        <AboutBox />
       </div>
+
     </section>
   )
+
+  return (
+    <section className="flex items-center justify-center">
+      <div className="absolute pointer-events-none">
+        <img src={`${prefix}/${portrait}`} className="scale-50 translate-y-75" alt="Portrait" />
+      </div>      
+    </section>
+  )
+  */}
+}
+
+export function Hero() {
+  const isMobile = useIsMobile()
+  const portraits = ["portrait0.png", "portrait1.png", "portrait2.png", "portrait3.png", "portrait4.png" ];
+  const [selectedPortrait, setSelectedPortrait] = useState(portraits[0]);
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * portraits.length);
+    setSelectedPortrait(portraits[randomIndex]);
+  }, []);
+
+  return isMobile 
+    ? <HeroMobile portrait={selectedPortrait} /> 
+    : <HeroDesktop portrait={selectedPortrait} />;
 }

@@ -1,9 +1,11 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { prefix } from '@/lib/utils'
+import { useIsMobile } from '@/hooks/use-mobile'
+import { useDeviceOrientation } from '@/hooks/use-mobile'
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -12,31 +14,26 @@ const navItems = [
   { label: "Blog", href: "#blog" },
 ]
 
-export function Navbar() {
+function LogoName() {
+  return (
+    <>
+      <div className="flex items-center justify-center">
+        <img src={`${prefix}/logoicon.svg`}  className="w-10 h-10" />
+        <span className="text-[32px] font-semibold" style={{ fontFamily: "var(--font-montserrat)" }}>V</span>
+        <span className="text-[32px] font-medium -translate-x-1" style={{ fontFamily: "var(--font-sansita)" }}>aleArt</span>
+      </div>
+    </>
+  );  
+}
+
+function NavItems() {
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const navRef = useRef<HTMLDivElement>(null)
 
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl"
-    >
-      <nav
-        ref={navRef}
-        className="flex items-center justify-between px-4 py-3 bg-zinc-900/40 backdrop-blur-md border border-zinc-800"
-      >
-        {/* LogoName */}
-        <div className="flex items-center justify-center">
-          <img src={`${prefix}/logoicon.svg`}  className="w-10 h-10" />
-          <span className="text-[32px] font-semibold" style={{ fontFamily: "var(--font-montserrat)" }}>V</span>
-          <span className="text-[32px] font-medium -translate-x-1" style={{ fontFamily: "var(--font-sansita)" }}>aleArt</span>
-        </div>
-
+    <>
         {/* NavItems */}
-        <div className="hidden md:flex items-center gap-1 relative">
+        <div className="items-center gap-1 relative">
           {navItems.map((item, index) => (
             <a
               key={item.label}
@@ -57,9 +54,44 @@ export function Navbar() {
             </a>
           ))}
         </div>
+    </>
+  );  
+}
+
+export function NavbarMobile() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { isMobile, orientation } = useDeviceOrientation();
+  const isLandscape = orientation === 'landscape';
+  const navRef = useRef<HTMLDivElement>(null)
+  
+  return (
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl backdrop-blur-md"
+    >
+      <nav
+        ref={navRef}
+        className="flex items-center justify-between px-4 py-3 bg-zinc-900/40 border border-zinc-800"
+      >
+        <LogoName />
+
+        {isLandscape && (
+          <NavItems />
+        )}
+        {!isLandscape && (
+          <button
+            className="md:hidden p-2 text-zinc-400 hover:text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        )}
+
       </nav>
 
-      {/* MobileMenu */}
       {mobileMenuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -79,12 +111,26 @@ export function Navbar() {
               </a>
             ))}
             <hr className="border-zinc-800 my-2" />
-
-
-            
           </div>
         </motion.div>
       )}
+
     </motion.header>
   );
+}
+
+export function NavbarDesktop() {
+
+  {/*
+  */}
+
+  return (
+    <>
+    </>
+  );  
+}
+
+export function Navbar() {
+  const isMobile = useIsMobile()
+  return isMobile ? <NavbarMobile /> : <NavbarDesktop />;
 }
