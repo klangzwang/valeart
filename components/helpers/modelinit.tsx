@@ -5,16 +5,16 @@ import { useGLTF, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import CanvasLoader from "../loader";
+import CanvasLoader from "./loader";
 
-interface ObjectModelProps {
+interface ModelProps {
   modelPath: string;
   scale?: number;
   position?: [number, number, number];
   rotation?: [number, number, number];
 }
 
-const ObjectModel: React.FC<ObjectModelProps> = ({
+const Model: React.FC<ModelProps> = ({
   modelPath,
   scale = 1,
   position = [0, 0, 0],
@@ -46,14 +46,14 @@ const ObjectModel: React.FC<ObjectModelProps> = ({
   );
 };
 
-interface ObjectCanvasProps {
+interface ModelCanvasProps {
   modelPath: string;
   scale?: number;
   position?: [number, number, number];
   rotation?: [number, number, number];
 }
 
-const ObjectCanvas: React.FC<ObjectCanvasProps> = ({
+const ModelCanvas: React.FC<ModelCanvasProps> = ({
   modelPath,
   scale = 1,
   position = [0, 0, 0],
@@ -70,7 +70,7 @@ const ObjectCanvas: React.FC<ObjectCanvasProps> = ({
         <directionalLight position={[5, 5, 5]} intensity={0.8} />
         <hemisphereLight args={['white', 'gray', 0.4]} />
         <Suspense fallback={<CanvasLoader />}>
-          <ObjectModel modelPath={modelPath} scale={scale} position={position} rotation={rotation} />
+          <Model modelPath={modelPath} scale={scale} position={position} rotation={rotation} />
         </Suspense>
         <Preload all />
       </Canvas>
@@ -78,5 +78,5 @@ const ObjectCanvas: React.FC<ObjectCanvasProps> = ({
   );
 };
 
-export { ObjectModel };
-export default ObjectCanvas;
+export { Model };
+export default ModelCanvas;

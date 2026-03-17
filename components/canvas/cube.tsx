@@ -1,43 +1,14 @@
+"use client"
+
 import React, { Suspense, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion"
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
-import { DRACOLoader } from "three/addons/loaders/DRACOLoader";
-import * as THREE from "three";
-import CanvasLoader from "../loader";
+import CanvasLoader from "../helpers/loader";
 
-const CubeModel = () => {
-  const { scene } = useGLTF(
-    "./Cube/Cube.gltf",
-    undefined,
-    (loader) => {
-      const dracoLoader = new DRACOLoader();
-      loader.setDRACOLoader(dracoLoader);
-    }
-  );
+export function CubeCanvas() {
 
-  // Ensure the cube is visible from the inside (inverted normals) like a skybox.
-  scene.traverse((child) => {
-    if (child.isMesh && child.material) {
-      const materials = Array.isArray(child.material)
-        ? child.material
-        : [child.material];
-      materials.forEach((material) => {
-        if (material && "side" in material) {
-          //material.side = THREE.BackSide;
-          material.needsUpdate = true;
-        }
-      });
-    }
-  });
-
-  return (
-    <primitive object={scene} scale={2.5} position-y={0} rotation-y={0} />
-  );
-};
-
-const CubeCanvas = () => {
-  const controlsRef = useRef();
+  const controlsRef = useRef<any>(null);
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-50px" })
 
@@ -67,7 +38,7 @@ const CubeCanvas = () => {
         >
           <ambientLight intensity={0.8} />
           <directionalLight position={[5, 5, 5]} intensity={0.8} />
-          <hemisphereLight skyColor="white" groundColor="gray" intensity={0.4} />
+          <hemisphereLight color="white" groundColor="gray" intensity={0.4} />
           <OrbitControls
             ref={controlsRef}
             autoRotate
@@ -76,7 +47,7 @@ const CubeCanvas = () => {
             minPolarAngle={Math.PI / 2}
           />
           <Suspense fallback={<CanvasLoader />}>
-            <CubeModel />
+
           </Suspense>
           <Preload all />
         </Canvas>
@@ -84,5 +55,3 @@ const CubeCanvas = () => {
     </footer>
   );
 };
-
-export default CubeCanvas;

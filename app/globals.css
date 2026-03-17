@@ -174,3 +174,20 @@
   stroke-dashoffset: 1000;
   animation: draw-line 2s ease-out forwards;
 }
+
+/* =============================================================================== */
+.gray-gradient {
+  background: #b9b9b9;
+  background: linear-gradient(-90deg, #b9b9b9 0%, rgba(60, 51, 80, 0) 100%);
+  background: -webkit-linear-gradient(-90deg, #b9b9b9 0%, rgba(60, 51, 80, 0) 100%);
+}
+
+.border-secondary {
+    --tw-border-opacity: 1;
+    border-color: rgb(170 166 195 / var(--tw-border-opacity, 1));
+}
+
+.bg-secondary {
+    --tw-bg-opacity: 1;
+    background-color: rgb(170 166 195 / var(--tw-bg-opacity, 1));
+}
