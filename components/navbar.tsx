@@ -1,96 +1,94 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { prefix } from '@/lib/utils'
-import { useIsMobile } from '@/hooks/use-mobile'
-import { useDeviceOrientation } from '@/hooks/use-mobile'
-import { useNavStore } from '@/hooks/use-nav-store'
 
 const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
+  { label: "Projekte", href: "#projekte" },
   { label: "Downloads", href: "#downloads" },
-  { label: "Blog", href: "#blog" },
+  { label: "Docs", href: "#" },
+  { label: "Blog", href: "#" },
 ]
 
-function LogoName() {
-  return (
-    <>
-      <div className="flex items-center justify-center">
-        <img src={`${prefix}/logoicon.svg`}  className="w-10 h-10" />
-        <span className="text-[32px] font-semibold" style={{ fontFamily: "var(--font-montserrat)" }}>V</span>
-        <span className="text-[32px] font-medium -translate-x-1" style={{ fontFamily: "var(--font-sansita)" }}>aleArt</span>
-      </div>
-    </>
-  );  
-}
-
-function NavItems() {
+export function Navbar() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  return (
-    <>
-      <div className="items-center gap-1 relative">
-        {navItems.map((item, index) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className="relative px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-          {hoveredIndex === index && (
-            <motion.div
-              layoutId="navbar-hover"
-              className="absolute inset-0 bg-zinc-800 rounded-full"
-              initial={false}
-              transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            />
-          )}
-          <span className="relative z-10">{item.label}</span>
-        </a>
-        ))}
-      </div>
-    </>
-  );  
-}
-
-export function NavbarMobile() {
-  //const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { isOpen, toggle, close } = useNavStore()
-  const { isMobile, orientation } = useDeviceOrientation();
-  const isLandscape = orientation === 'landscape';
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navRef = useRef<HTMLDivElement>(null)
+
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl backdrop-blur-md"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl"
     >
       <nav
         ref={navRef}
-        className="flex items-center justify-between px-4 py-3 bg-zinc-900/40 border border-zinc-800"
+        className="relative flex items-center justify-between px-4 py-3 rounded-full bg-zinc-900/40 backdrop-blur-md border border-zinc-800"
       >
-        <LogoName />
+        {/* Logo */}
+        <a href="#" className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <span className="w-8 h-8 text-zinc-950 font-bold text-sm">
+              <img src={`${prefix}/logoicon.svg`} />
+            </span>
+          </div>
+          <span className="text-[32px] font-semibold" style={{ fontFamily: "var(--font-montserrat)" }}>V</span>
+          <span className="text-[32px] font-medium -translate-x-1" style={{ fontFamily: "var(--font-sansita)" }}>aleArt</span>
+          {/* 
+          <span className="font-semibold text-white hidden sm:block">s</span>
+          */}
+        </a>
 
-        {isLandscape && (
-          <NavItems />
-        )}
-        {!isLandscape && (
-          <button
-            className="md:hidden p-2 text-zinc-400 hover:text-white"
-            onClick={() => toggle()}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        )}
+        {/* Desktop Nav Items */}
+        <div className="hidden md:flex items-center gap-1 relative">
+          {navItems.map((item, index) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="relative px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {hoveredIndex === index && (
+                <motion.div
+                  layoutId="navbar-hover"
+                  className="absolute inset-0 bg-zinc-800 rounded-full"
+                  initial={false}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{item.label}</span>
+            </a>
+          ))}
+        </div>
 
+        {/* CTA Buttons 
+        <div className="hidden md:flex items-center gap-3">
+          <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white hover:bg-zinc-800">
+            Sign In
+          </Button>
+          <Button size="sm" className="shimmer-btn bg-white text-zinc-950 hover:bg-zinc-200 rounded-full px-4">
+            Get Started
+          </Button>
+        </div>
+        */}
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2 text-zinc-400 hover:text-white"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </nav>
 
-      {isOpen && (
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -103,43 +101,21 @@ export function NavbarMobile() {
                 key={item.label}
                 href={item.href}
                 className="px-4 py-3 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
-                onClick={() => toggle()}
+                onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
               </a>
             ))}
+            {/* 
             <hr className="border-zinc-800 my-2" />
+            <Button variant="ghost" className="justify-start text-zinc-400 hover:text-white">
+              Sign In
+            </Button>
+            <Button className="shimmer-btn bg-white text-zinc-950 hover:bg-zinc-200 rounded-full">Get Started</Button>
+            */}
           </div>
         </motion.div>
       )}
-
     </motion.header>
-  );
-}
-
-export function NavbarDesktop() {
-  const navRef = useRef<HTMLDivElement>(null)
-  return (
-  <>
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-3xl backdrop-blur-md"
-    >
-      <nav
-        ref={navRef}
-        className="flex items-center justify-between px-4 py-3 bg-zinc-900/40 border border-zinc-800"
-      >
-        <LogoName />
-        <NavItems />
-      </nav>
-    </motion.header>
-  </>
-  );  
-}
-
-export function Navbar() {
-  const isMobile = useIsMobile()
-  return isMobile ? <NavbarMobile /> : <NavbarDesktop />;
+  )
 }

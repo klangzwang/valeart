@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { Variants } from "framer-motion"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -8,6 +9,18 @@ export function cn(...inputs: ClassValue[]) {
 
 export const isProd = process.env.NODE_ENV === 'production';
 export const prefix = isProd ? '/valeart' : '';
+
+export const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1], 
+    },
+  },
+}
 
 export const containerVariants = {
   hidden: {},
@@ -18,7 +31,7 @@ export const containerVariants = {
   },
 }
 
-export const textRevealVariants = {
+export const textRevealVariants: Variants = {
   hidden: { y: "100%" },
   visible: (i: number) => ({
     y: 0,

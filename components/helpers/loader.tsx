@@ -1,7 +1,9 @@
+"use client"
+
 import { Html, useProgress } from "@react-three/drei";
 import { CSSProperties } from "react";
 
-const CanvasLoader = () => {
+export function CanvasLoader() {
   const { progress } = useProgress();
 
   const containerStyle:CSSProperties = {
@@ -25,5 +27,3 @@ const CanvasLoader = () => {
     </Html>
   );
 };
-
-export default CanvasLoader;
