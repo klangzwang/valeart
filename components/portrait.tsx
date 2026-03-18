@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { prefix } from '@/lib/utils'
 
 const IMG_BASE_PATH = '/portrait/';
 const blinkSequence = [
@@ -47,11 +48,10 @@ function Portrait() {
   };
 
   useEffect(() => {
-    // Vorladen aller Bilder beim ersten Start (Pre-Caching)
     const allImages = [...blinkSequence.slice(1), ...expressionVariations];
     allImages.forEach((file) => {
       const img = new Image();
-      img.src = `${IMG_BASE_PATH}${file}`;
+      img.src = `${prefix}${IMG_BASE_PATH}${file}`;
     });
 
     const animate = () => {
@@ -90,10 +90,10 @@ function Portrait() {
     };
   }, []);
 
-  // Bestimme den finalen Bildpfad für das Rendering
-  const displayImage = blinkState === 0 
-    ? `${IMG_BASE_PATH}${currentExpression}` 
-    : `${IMG_BASE_PATH}${blinkSequence[blinkState]}`;
+  const imageName = blinkState === 0 
+    ? currentExpression 
+    : blinkSequence[blinkState];
+  const displayImage = `${prefix}${IMG_BASE_PATH}${imageName}`;
 
   return (
   <div>

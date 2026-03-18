@@ -127,6 +127,37 @@ export function Hero() {
           </span>
         </h1>
 
+        {/* TechAvatars */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <div className="flex items-center -space-x-3">
+            {avatars.map((avatar, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                className="relative"
+              >
+                <img
+                  src={`${prefix}${avatar || "/placeholder.svg"}`}
+                  alt=""
+                  className="w-10 h-10 rounded-full border-2 border-zinc-950 object-cover"
+                />
+              </motion.div>
+            ))}
+          </div>
+          {/*
+          <p className="text-sm text-zinc-500">
+            Trusted by <span className="text-zinc-300 font-medium">2,000+</span> teams worldwide
+          </p>
+          */}
+        </motion.div>
+
         {/* Subheadline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -160,37 +191,6 @@ export function Hero() {
           </Button>
         </motion.div>
         */}
-
-        {/* Social Proof */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="flex flex-col items-center gap-4"
-        >
-          <div className="flex items-center -space-x-3">
-            {avatars.map((avatar, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.5, x: -20 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
-                className="relative"
-              >
-                <img
-                  src={avatar || "/placeholder.svg"}
-                  alt=""
-                  className="w-10 h-10 rounded-full border-2 border-zinc-950 object-cover"
-                />
-              </motion.div>
-            ))}
-          </div>
-          {/*
-          <p className="text-sm text-zinc-500">
-            Trusted by <span className="text-zinc-300 font-medium">2,000+</span> teams worldwide
-          </p>
-          */}
-        </motion.div>
       </div>
       {/*{isAtTop && <ScrollHint />}*/}
     </section>
