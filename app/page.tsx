@@ -22,6 +22,3 @@ export default function Home() {
     </SmoothScroll>
   )
 }
-
-// import ObjectCanvas from "@/components/render/objects"
-{/* <ObjectCanvas modelPath="./Objects/Cube.gltf" scale={2.5} />*/}

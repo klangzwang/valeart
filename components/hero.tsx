@@ -8,8 +8,7 @@ import { prefix, textRevealVariants } from '@/lib/utils'
 import { ScrollHint, FadedDot } from "./ui/render"
 import { GridFull } from "./ui/grid"
 import { useNavStore } from '@/hooks/use-nav-store'
-import { Portrait } from "@/components/portrait"
-import { DynamicBlinkingAvatar } from "@/components/DynamicBlinkingAvatar"
+import { Portrait } from '@/components/portrait'
 import { CanvasLoader } from "@/components/helpers/loader";
 
 const avatars = [
@@ -73,7 +72,7 @@ export function Hero() {
           */}
 
           {isAtTop ?
-          <DynamicBlinkingAvatar/>
+          <Portrait />
            : 
           <img
             src={`${prefix}/portrait/${selectedPortrait}`}
