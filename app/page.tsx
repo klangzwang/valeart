@@ -6,6 +6,7 @@ import { Boxes } from "@/components/boxes"
 import { Files } from "@/components/files"
 import { Shoutit } from "@/components/shoutit"
 import { Footer } from "@/components/footer"
+import { Projects } from "@/components/projects"
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         <Marquee />
+        <Projects />
         <Boxes />
         <Files />
         <Shoutit />
